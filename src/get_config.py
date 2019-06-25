@@ -2,20 +2,7 @@ import os
 
 config_file_path = "./config.txt"
 
-config_defaults = {
-    "ping_update_delay_seconds": "60",
-    "vm_update_delay_seconds": "60",
 
-    "ping_display_delay_seconds":"1",
-    "vm_display_delay_seconds":"1",
-    "username": " ",
-    "password": " ",
-    "host": " ",
-
-
-    "server": [],
-    "vm": [],
-}
 
 
 def _is_line_active(line):
@@ -36,8 +23,23 @@ def _is_line_active(line):
 
 
 def get_config_info():
-    config_keys = list(config_defaults.keys())
-    return_config_dict = config_defaults
+
+    return_config_dict = {
+        "ping_update_delay_seconds": "60",
+        "vm_update_delay_seconds": "60",
+
+        "ping_display_delay_seconds":"1",
+        "vm_display_delay_seconds":"1",
+        "username": " ",
+        "password": " ",
+        "host": " ",
+
+
+        "server": [],
+        "vm": [],
+    }
+    config_keys = list(return_config_dict.keys())
+
 
     with open(config_file_path, "r") as f:
         config_lines = f.readlines()
@@ -65,6 +67,7 @@ def get_config_info():
                     raise Exception("invalid config key")
                 else:
                     return_config_dict[key] = value
+
 
     return return_config_dict
 
