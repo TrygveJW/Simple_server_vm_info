@@ -1,0 +1,21 @@
+#   config file for the server monitor thingy
+
+username=
+password=
+host=
+
+ping_update_delay_seconds=60
+vm_update_delay_seconds=240
+
+ping_display_delay_seconds=4
+vm_display_delay_seconds=2
+
+#
+#   servers to ping
+#
+
+# use the format:
+# server=ServerIP:ServerDisplayName
+
+
+

@@ -1,0 +1,1 @@
+viser grafisk om de gitte pingserverene responderer og om vm maskin callene responderer som de skal
