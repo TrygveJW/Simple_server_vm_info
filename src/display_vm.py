@@ -40,12 +40,13 @@ def _make_box(row_content, name_len):
 
     for data in row_content:
         name = data["name"] if len(data["name"]) <= name_len else data["name"][:name_len - 2] + ".."
+        ip = data["ip"] if len(data["ip"]) <= name_len else data["ip"][:name_len - 2] + ".."
 
-        dt1 = "ID: {:<" + str(name_len) + "} "
+        dt1 = "VM: {:<" + str(name_len) + "} "
         dt2 = "IP: {:<" + str(name_len) + "} "
 
         box_line1 += dt1.format(name)
-        box_line2 += dt2.format(data["ip"])
+        box_line2 += dt2.format(ip)
         box_line3 += f"{horizontal_la * (name_len + 5)}"
 
         status = data['state']
@@ -144,7 +145,8 @@ def draw_table(data, name_width, last_index):
 
 
 
-def read_data():
+def read_data(data):
+    js_data = data
     try:
         with open("src/.tmp/vm_status_data.txt") as f:
             js_data = json.load(f)
@@ -157,9 +159,11 @@ def read_data():
 
 def main():
     last_index = 0
+    data = None
     while True:
+        data = read_data(data)
 
-        last_index = draw_table(read_data(), 15, last_index)
+        last_index = draw_table(data, 15, last_index)
         time.sleep(update_delay)
 
 

@@ -125,17 +125,26 @@ def draw_table(data, name_width):
     print(btm_bar, end="\r")
 
 
-def read_data():
-    with open("src/.tmp/server_status_data.txt") as f:
-        js_data = json.load(f)
+def read_data(data):
+    js_data = data
+    try:
+        with open("src/.tmp/server_status_data.txt") as f:
+            js_data = json.load(f)
+    except Exception:
+        pass
+
 
     return js_data
 
 
 
 def main():
+    last_index = 0
+    data = None
     while True:
-        draw_table(read_data(), 15)
+        data = read_data(data)
+
+        draw_table(data, 15)
         time.sleep(1)
 
 

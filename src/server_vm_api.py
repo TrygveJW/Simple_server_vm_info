@@ -15,6 +15,12 @@ host = config["host"]
 
 port = 443
 
+"""
+
+
+"""
+
+
 
 class ServerVmAPI:
     def __init__(self):
@@ -45,6 +51,8 @@ class ServerVmAPI:
             return
 
         summary = vm.summary
+        print(summary)
+
 
         data_dict["name"] = summary.config.name
         data_dict["os"] = summary.config.guestFullName
@@ -53,7 +61,7 @@ class ServerVmAPI:
 
         if summary.guest != None:
             ip = summary.guest.ipAddress
-            if ip != None and ip != "" and ":" not in ip:
+            if ip != None and ip != "" :#and ":" not in ip:
                 data_dict["ip"] = ip
 
         self.vm_list.append(data_dict)
@@ -74,6 +82,8 @@ class ServerVmAPI:
         content = si.RetrieveContent()
 
 
+
+
         for child in content.rootFolder.childEntity:
             if hasattr(child, 'vmFolder'):
                 datacenter = child
@@ -81,6 +91,10 @@ class ServerVmAPI:
                 vmList = vmFolder.childEntity
                 for vm in vmList:
                     self._get_vm_info(vm)
+
+
+
+        exit()
 
         return self.vm_list
 
