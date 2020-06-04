@@ -4,5 +4,4 @@
 
 import { genPingScreen } from "./screens/genPingScreen";
 
-
 genPingScreen();

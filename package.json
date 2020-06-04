@@ -1,0 +1,34 @@
+{
+  "name": "server_monitor_sak",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "html": "copyfiles -u 1 src/**/*.html src/**/*.css dist/",
+    "lint": "tslint -c tslint.json -p tsconfig.json",
+    "start": "npm run build && npm run html && electron ./dist/main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TrygveJW/server_monitor_sak.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TrygveJW/server_monitor_sak/issues"
+  },
+  "homepage": "https://github.com/TrygveJW/server_monitor_sak#readme",
+  "devDependencies": {
+    "copyfiles": "^2.3.0",
+    "electron": "^9.0.1",
+    "eslint": "^7.1.0",
+    "ping": "^0.2.3",
+    "ts-loader": "^7.0.5",
+    "typescript": "^3.9.3"
+  },
+  "dependencies": {
+    "@types/ping": "^0.2.0"
+  }
+}
