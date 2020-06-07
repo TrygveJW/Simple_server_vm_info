@@ -19,39 +19,29 @@ h2 {
     background-color: #2196F3;
     padding: 0px;
   }
+
+
   .grid-item {
     background-color: rgba(255, 255, 255, 0.8);
     border: 1px solid rgba(0, 0, 0, 0.8);
     text-align: left;
+    display: grid;
+    grid-template-columns: 3fr 1fr;
   }
 
 .server-info {
-    margin: auto;
-    width: 100%;
-    height: 100%;
-    display: grid;
-    grid-template-rows: 1fr 1fr 1fr;
-    grid-template-columns: 10em 1fr 1fr;
-    
+    grid-column: 1/2;
+
+    display: flex;
 }
-.server-info .server-h{
-    grid-row-end: span 1;
-    grid-column: 1 / 2;
-    margin: auto;
-    margin-left: 30px; 
+.server-info .types {
+    padding-left: 10px;
+    padding-right: 3em;
 }
 
-.server-info .server-d{
-    grid-row-end: span 1;
+
+.server-status{
     grid-column: 2 / 3;
-    margin: auto;
-    margin-left: 0px; 
-    
-}
-
-.status-block{
-    grid-row: 1 / 4;
-    grid-column: 3 / 4;
     
     background-color: lawngreen;
     border: 5px solid black;

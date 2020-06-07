@@ -3,6 +3,40 @@
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
 Object.defineProperty(exports, "__esModule", { value: true });
-const genPingScreen_1 = require("./screens/genPingScreen");
-genPingScreen_1.genPingScreen();
+const tslib_1 = require("tslib");
+const PingBox_1 = require("./screens/PingBox");
+const config_1 = require("./helpers/config");
+let gridContainer = document.getElementById("grid-container");
+let pingCofig = new config_1.Config("pingScreen");
+let displayList = [];
+let waitTime = (1) * 60 * 1000;
+function clearPingBoxes() {
+    displayList.forEach(element => {
+        element.htmlRoot.remove();
+    });
+    displayList = [];
+}
+function drawPingBoxes() {
+    clearPingBoxes();
+    pingCofig.saveData.forEach(element => {
+        let box = new PingBox_1.ServerBox(element);
+        displayList.push(box);
+        // this is NOT a good way of dooing this
+        box.makePingBox(gridContainer);
+    });
+}
+function initPingScreen() {
+    return tslib_1.__awaiter(this, void 0, void 0, function* () {
+        yield pingCofig.loadConfig();
+        drawPingBoxes();
+        refreshPingScreen();
+    });
+}
+function refreshPingScreen() {
+    displayList.forEach(element => {
+        element.updateScreen();
+    });
+}
+initPingScreen();
+setInterval(refreshPingScreen, waitTime);
 //# sourceMappingURL=renderer.js.map
