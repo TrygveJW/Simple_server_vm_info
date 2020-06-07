@@ -1,0 +1,21 @@
+body {
+    margin: 0px;
+    
+}
+#config-grid{
+    display: grid;
+    grid-template-rows: 10% 90%;
+
+    width: 100vw;
+    height: 100vh;
+}
+
+#config-bar{
+    grid-row: 1/2;
+    background-color: aquamarine;
+}
+
+#config-screen {
+    grid-row: 2/3;
+    background-color: burlywood;
+}

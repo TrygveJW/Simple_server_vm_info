@@ -1,0 +1,78 @@
+body {
+    margin: 0px;
+}
+
+h1 {
+    font-family: monospace;
+}
+
+h2 {
+    font-family: monospace;
+}
+
+#grid-container {
+    display: grid;
+    width: 100vw;
+    height: 100vh;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto auto;
+    background-color: #2196F3;
+    padding: 0px;
+  }
+
+
+  .grid-item {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    text-align: left;
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+  }
+
+.server-info {
+    grid-column: 1/2;
+
+    display: flex;
+}
+.server-info .types {
+    padding-left: 10px;
+    padding-right: 3em;
+}
+
+
+.server-status{
+    grid-column: 2 / 3;
+    
+    background-color: lawngreen;
+    border: 5px solid black;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    
+}
+
+.status-block h1{
+    font-size: 50px;
+
+    
+}
+
+/* ########## Config screen ########## */
+#config-grid{
+    display: grid;
+    grid-template-rows: 10% 90%;
+
+    width: 100vw;
+    height: 100vh;
+}
+
+#config-bar{
+    grid-row: 1/2;
+    background-color: aquamarine;
+}
+
+#config-screen {
+    grid-row: 2/3;
+    background-color: burlywood;
+}
