@@ -2,7 +2,7 @@ import ping from "ping";
 import dns from 'dns';
 
 import {ServerStatus} from "./../helpers/enums"
-import {ServerData} from "./../helpers/config"
+import {ServerConfigData} from "./../helpers/config"
 
 export class ServerBox {
     private name: string;
@@ -19,7 +19,7 @@ export class ServerBox {
     private pingOK: boolean = false;
     private domainOk: boolean = false;
 
-    constructor(server: ServerData) {
+    constructor(server: ServerConfigData) {
         this.name = server.serverName;
         this.ip = server.serverIP;
         this.domain = server.serverDomain;

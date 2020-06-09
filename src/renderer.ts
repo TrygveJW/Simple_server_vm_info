@@ -3,10 +3,10 @@
 // All of the Node.js APIs are available in this process.
 
 import { ServerBox } from "./screens/PingBox";
-import {Config, ServerData} from "./helpers/config"
+import {Config, ServerConfigData} from "./helpers/config"
 
 let gridContainer : HTMLElement = document.getElementById("grid-container")!;
-let pingCofig : Config<ServerData[]> = new Config("pingScreen");
+let pingCofig : Config<ServerConfigData[]> = new Config("pingScreen");
 let displayList: ServerBox[] = [];
 let waitTime = (1) * 60 * 1000;
 

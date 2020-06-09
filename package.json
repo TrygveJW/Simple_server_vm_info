@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "",
+    "build": "tsc",
     "watch": "tsc -w",
     "html": "copyfiles -u 1 src/**/*.html src/**/*.css dist/",
     "lint": "tslint -c tslint.json -p tsconfig.json",

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ServerData = exports.Config = void 0;
+exports.ConfigConfigData = exports.ServerConfigData = exports.Config = void 0;
 const tslib_1 = require("tslib");
 const electron_1 = tslib_1.__importDefault(require("electron"));
 const fs_1 = tslib_1.__importDefault(require("fs"));
@@ -28,12 +28,34 @@ class Config {
     }
 }
 exports.Config = Config;
-class ServerData {
+class ServerConfigData {
     constructor(name, ip, domain) {
-        this.serverName = name;
-        this.serverIP = ip;
-        this.serverDomain = domain;
+        this._serverName = name;
+        this._serverIP = ip;
+        this._serverDomain = domain;
+    }
+    get serverName() {
+        return this._serverName;
+    }
+    get serverIP() {
+        return this._serverIP;
+    }
+    get serverDomain() {
+        return this._serverDomain;
     }
 }
-exports.ServerData = ServerData;
+exports.ServerConfigData = ServerConfigData;
+class ConfigConfigData {
+    constructor(showvm, showPing) {
+        this._showPingScreen = showPing;
+        this._showVMScreen = showvm;
+    }
+    get showVMScreen() {
+        return this._showVMScreen;
+    }
+    get showPingScreen() {
+        return this._showPingScreen;
+    }
+}
+exports.ConfigConfigData = ConfigConfigData;
 //# sourceMappingURL=config.js.map

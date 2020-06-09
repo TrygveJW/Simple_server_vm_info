@@ -1,10 +1,13 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.InputConfigTable = void 0;
+require("./WoldsethUtils/EventWatcher");
+const EventWatcher_1 = require("./WoldsethUtils/EventWatcher");
+const Watcher = new EventWatcher_1.EventWatcher();
 //
 //  Husk alert når man forlate siden om man ønsker og lagre
 //
 // let configBar = document.getElementById("config-bar") as HTMLElement;
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.InputConfigTable = void 0;
 // let mainConfigButtton = document.createElement("button") as HTMLButtonElement;
 // configBar.appendChild(mainConfigButtton);
 /**
@@ -15,31 +18,43 @@ exports.InputConfigTable = void 0;
  */
 class InputConfigTable {
     constructor(headers, parent, defaults) {
-        this.tableCurrentValues = [[]];
-        this.tableDefaultValues = [[]];
+        this._tableCurrentValues = [];
+        this._tableDefaultValues = [];
         this.hasChanged = false;
-        this.lookup = new Map();
+        this.tableRows = [];
         this.tableHeaders = headers;
         this.rootElement = parent;
-        this.tableDefaultValues = defaults || [[]];
+        this._tableDefaultValues = defaults || [];
     }
-    builTableDefaults() {
+    get tableCurrentValues() {
+        return this._tableCurrentValues;
+    }
+    get tableDefaultValues() {
+        return this._tableDefaultValues;
+    }
+    buildTable() {
         this.makeHeadRow();
-        this.makeNewInputRow();
-    }
-    parseTableValues() {
-        let ret = [[]];
-        this.tableRows.forEach(row => {
-            let rowData = [];
-            row.forEach(inputElm => {
-                rowData.push(inputElm.value);
-            });
-            ret.push(rowData);
+        this.tableCurrentValues.forEach(row => {
+            if (row.every((v) => v != "")) {
+                this.makeNewInputRow(row);
+            }
         });
-        return ret;
+        // if there are no values make an aditional column
+        let currVLength = this.tableCurrentValues.length;
+        if (currVLength == 0) {
+            this.makeNewInputRow(null);
+        }
+        else {
+            this.AddRowIfFullTable();
+        }
+    }
+    AddRowIfFullTable() {
+        if (this.tableCurrentValues[this.tableCurrentValues.length - 1].every((v) => v != "")) {
+            console.log(this.tableCurrentValues[this.tableCurrentValues.length - 1]);
+            this.makeNewInputRow(null);
+        }
     }
     makeHeadRow() {
-        var _a;
         let hRow = document.createElement("tr");
         this.tableHeaders.forEach(header => {
             let tableDtext = document.createElement("h2");
@@ -48,32 +63,42 @@ class InputConfigTable {
             tableD.appendChild(tableDtext);
             hRow.appendChild(tableD);
         });
-        (_a = this.tableElement) === null || _a === void 0 ? void 0 : _a.appendChild(hRow);
+        this.rootElement.appendChild(hRow);
     }
     makeNewInputRow(rowValues) {
-        //let  = defaults || Array.apply(null,Array(this.tableHeaders.length).map(_ => ""));
         let hRow = document.createElement("tr");
-        let rowData = [];
-        let currCol = this.tableRows.length;
-        for (let n = 0; n < rowValues.length; n++) {
+        let currRow = this.rootElement.children.length;
+        console.log(this.rootElement.children.length);
+        //let rowData: HTMLInputElement[] = [];
+        this._tableCurrentValues[currRow] = [];
+        let aa = (ev) => {
+            console.log(ev.target);
+            console.log(this._tableCurrentValues);
+            console.log("aaaa");
+        };
+        for (let n = 0; n < this.tableHeaders.length; n++) {
             let value = (rowValues === null || rowValues === void 0 ? void 0 : rowValues[n]) || "";
             let tableDInput = document.createElement("input");
-            this.lookup.set(tableDInput, [currCol, n]);
+            //this.lookup.set(tableDInput, [currRow, n])
             tableDInput.value = value;
-            tableDInput.onchange = this.handleChange;
-            rowData.push(tableDInput);
+            //rowData.push(tableDInput);
+            Watcher.AddToWatcher(tableDInput, "change", (ev) => {
+                this.tableCurrentValues[currRow][n] = tableDInput.value;
+                this.hasChanged = true;
+                this.AddRowIfFullTable();
+            });
+            tableDInput.addEventListener("change", (ev) => {
+                this.tableCurrentValues[currRow][n] = tableDInput.value;
+                this.hasChanged = true;
+                this.AddRowIfFullTable();
+            });
+            this.tableCurrentValues[currRow][n] = tableDInput.value;
             let tableD = document.createElement("td");
             tableD.appendChild(tableDInput);
             hRow.appendChild(tableD);
         }
-        this.tableRows.push(rowData);
-    }
-    handleChange(e) {
-        let newValue = e.returnValue;
-        let elm = e.target;
-        console.log(elm);
-        console.log(this.lookup.get(elm));
-        console.log(newValue);
+        //this.tableRows.push(rowData);
+        this.rootElement.appendChild(hRow);
     }
 }
 exports.InputConfigTable = InputConfigTable;

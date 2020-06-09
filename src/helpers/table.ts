@@ -1,4 +1,6 @@
-
+import "./WoldsethUtils/EventWatcher";
+import { EventWatcher } from './WoldsethUtils/EventWatcher';
+const Watcher = new EventWatcher();
 //
 //  Husk alert når man forlate siden om man ønsker og lagre
 //
@@ -16,40 +18,59 @@
  */
 export class InputConfigTable{
     private tableHeaders : string[];
-    private tableCurrentValues : [string[]] = [[]];
-    private tableDefaultValues : [string[]] = [[]];
+    private _tableCurrentValues: string[][] = [];
+    private _tableDefaultValues: string[][] = [];
+    
+
     private hasChanged : boolean = false;
 
     private rootElement: HTMLElement;
     private tableElement : HTMLTableElement;
-    private tableRows : [HTMLInputElement[]];
-    private lookup = new Map<HTMLInputElement, Number[]>()
+    private tableRows : Array<Array<HTMLInputElement>> = [];
+    //lookup : Map<HTMLInputElement, Number[]> = new Map<HTMLInputElement, Number[]>();
 
 
     constructor(headers: string[], parent: HTMLElement)
     constructor(headers: string[], parent: HTMLElement, defaults?: [string[]]){
         this.tableHeaders = headers;
         this.rootElement = parent;
-        this.tableDefaultValues = defaults || [[]];
+        this._tableDefaultValues = defaults || [];
     }
 
-    builTableDefaults(){
+    public get tableCurrentValues(): string[][] {
+        return this._tableCurrentValues;
+    }
+
+    public get tableDefaultValues(): string[][] {
+        return this._tableDefaultValues;
+    }
+
+
+    buildTable(){
+        Watcher.removeAll(); // this is not ideal but it wil hinder a memory leak
         this.makeHeadRow();
-        this.makeNewInputRow();
+        this.tableCurrentValues.forEach(row => {
+            if (row.every((v) => v != "")){
+                this.makeNewInputRow(row);
+            }
+            
+        });
 
+        // if there are no values make an aditional column
+        let currVLength = this.tableCurrentValues.length;
+        if (currVLength == 0){
+            this.makeNewInputRow(null);
+        } else {
+            this.AddRowIfFullTable();
+        }
+        
     }
 
-    private parseTableValues() : [string[]]{
-        let ret : [string[]] = [[]]
-        this.tableRows.forEach(row => {
-            let rowData : string[] = [];
-            
-            row.forEach(inputElm => {
-                rowData.push(inputElm.value)
-            })
-            ret.push(rowData);
-        })
-        return ret;
+    private AddRowIfFullTable(){
+        if (this.tableCurrentValues[this.tableCurrentValues.length - 1 ].every((v) => v != "")){
+            console.log(this.tableCurrentValues[this.tableCurrentValues.length - 1 ])
+            this.makeNewInputRow(null);
+        }
     }
     
     private makeHeadRow(){
@@ -62,43 +83,55 @@ export class InputConfigTable{
             tableD.appendChild(tableDtext);
             hRow.appendChild(tableD);
         })
-        this.tableElement?.appendChild(hRow);
+        this.rootElement.appendChild(hRow);
         
     }
 
-    private makeNewInputRow(): void
-    private makeNewInputRow(rowValues?: string[]){
-        //let  = defaults || Array.apply(null,Array(this.tableHeaders.length).map(_ => ""));
+    
+
+    makeNewInputRow(rowValues?: string[]){
         let hRow = document.createElement("tr") as HTMLTableRowElement
-        let rowData: HTMLInputElement[] = [];
-        let currCol = this.tableRows.length;
-        for (let n = 0; n < rowValues.length; n++) {
+        let currRow = this.rootElement.children.length;
+        
+        console.log(this.rootElement.children.length)
+
+        //let rowData: HTMLInputElement[] = [];
+        this._tableCurrentValues[currRow] = [];
+
+        let aa = (ev:Event) =>{
+            console.log(ev.target);
+            console.log(this._tableCurrentValues);
+            console.log("aaaa");
+        }
+        
+        for (let n = 0; n < this.tableHeaders.length; n++) {
             let value : string = rowValues?.[n] || "";
 
             let tableDInput = document.createElement("input") as HTMLInputElement;
-            this.lookup.set(tableDInput, [currCol, n])
+            //this.lookup.set(tableDInput, [currRow, n])
             tableDInput.value = value;
-            tableDInput.onchange = this.handleChange;
-            rowData.push(tableDInput);
+            //rowData.push(tableDInput);
+            
+            Watcher.AddToWatcher(tableDInput, "change", (ev) => {
+                this.tableCurrentValues[currRow][n] = tableDInput.value;
+                this.hasChanged = true;
+                this.AddRowIfFullTable();
+            });
 
+            tableDInput.addEventListener("change", (ev) => {
+                this.tableCurrentValues[currRow][n] = tableDInput.value;
+                this.hasChanged = true;
+                this.AddRowIfFullTable();
+            })
+
+            this.tableCurrentValues[currRow][n] = tableDInput.value;
             let tableD = document.createElement("td") as HTMLTableDataCellElement;
             tableD.appendChild(tableDInput);
             hRow.appendChild(tableD);
         }
-        this.tableRows.push(rowData);
+        //this.tableRows.push(rowData);
+        this.rootElement.appendChild(hRow);
     }
-
-    handleChange(e: Event){
-        let newValue = e.returnValue;
-        let elm = e.target as HTMLInputElement;
-        console.log(elm);
-        console.log(this.lookup.get(elm));
-        console.log(newValue)
-
-    }
-
-
-    
 }
 
 
