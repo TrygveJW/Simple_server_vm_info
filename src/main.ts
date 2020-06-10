@@ -3,6 +3,7 @@ import * as path from "path";
 
 
 
+
 let mainWindow: Electron.BrowserWindow;
 
 function createWindow() {
@@ -13,7 +14,7 @@ function createWindow() {
       preload: path.join(__dirname, "preload.js"),
       nodeIntegration: true
     },
-    width: 800,
+    width: 1500,
   });
 
   // and load the index.html of the app.

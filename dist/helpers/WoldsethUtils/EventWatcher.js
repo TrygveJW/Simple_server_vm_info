@@ -5,7 +5,7 @@ class EventWatcher {
     constructor() {
         this.objectEventPair = new Map();
     }
-    AddToWatcher(obj, eventType, handler) {
+    addToWatcher(obj, eventType, handler) {
         if (this.objectEventPair.has(obj)) {
             this.objectEventPair.get(obj).set(handler, eventType);
         }

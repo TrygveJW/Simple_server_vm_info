@@ -5,3 +5,9 @@ export enum ServerStatus {
     NO_INTERNET,
     DOMAIN_ERROR
 }
+
+export enum ManagerTypes{
+    Main,
+    Ping,
+    Vm,
+}

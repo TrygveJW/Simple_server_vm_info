@@ -2,7 +2,7 @@ import ping from "ping";
 import dns from 'dns';
 
 import {ServerStatus} from "./../helpers/enums"
-import {ServerConfigData} from "./../helpers/config"
+import {ServerConfigData} from "../helpers/configSaver"
 
 export class ServerBox {
     private name: string;

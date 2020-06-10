@@ -1,10 +1,10 @@
 
 
 export class EventWatcher{
-    private objectEventPair: Map<HTMLElement, Map<EventListenerOrEventListenerObject, string>> = new Map<any, Map<EventListenerOrEventListenerObject, string>>();
+    private objectEventPair: Map<EventTarget, Map<EventListenerOrEventListenerObject, string>> = new Map<EventTarget, Map<EventListenerOrEventListenerObject, string>>();
 
 
-    AddToWatcher<K extends keyof HTMLElementEventMap>(obj: HTMLElement, eventType: K, handler: EventListenerOrEventListenerObject):void{
+    addToWatcher<K extends keyof HTMLElementEventMap>(obj: EventTarget, eventType: K, handler: EventListenerOrEventListenerObject):void{
         if (this.objectEventPair.has(obj)){
             this.objectEventPair.get(obj).set(handler, eventType)
         } else {
@@ -15,7 +15,7 @@ export class EventWatcher{
     }
 
 
-    removeFromWatcher(obj: HTMLElement){
+    removeFromWatcher(obj: EventTarget){
         if (this.objectEventPair.has(obj)){
             for (let eventL of this.objectEventPair.get(obj).keys()) {
                 obj.removeEventListener(this.objectEventPair.get(obj).get(eventL), eventL)

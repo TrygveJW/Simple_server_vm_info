@@ -12,7 +12,7 @@ function createWindow() {
             preload: path.join(__dirname, "preload.js"),
             nodeIntegration: true
         },
-        width: 800,
+        width: 1500,
     });
     // and load the index.html of the app.
     mainWindow.loadFile(path.join(__dirname, "./config.html"));

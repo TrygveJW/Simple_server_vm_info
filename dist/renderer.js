@@ -4,10 +4,9 @@
 // All of the Node.js APIs are available in this process.
 Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
-const PingBox_1 = require("./screens/PingBox");
-const config_1 = require("./helpers/config");
+const configSaver_1 = require("./helpers/configSaver");
 let gridContainer = document.getElementById("grid-container");
-let pingCofig = new config_1.Config("pingScreen");
+let pingCofig = new configSaver_1.ConfigSaver("pingScreen");
 let displayList = [];
 let waitTime = (1) * 60 * 1000;
 function clearPingBoxes() {
@@ -18,12 +17,12 @@ function clearPingBoxes() {
 }
 function drawPingBoxes() {
     clearPingBoxes();
-    pingCofig.saveData.forEach(element => {
-        let box = new PingBox_1.ServerBox(element);
-        displayList.push(box);
-        // this is NOT a good way of dooing this
-        box.makePingBox(gridContainer);
-    });
+    // pingCofig.saveData.forEach(element => {
+    //     let box = new ServerBox(element);
+    //     displayList.push(box);
+    //     // this is NOT a good way of dooing this
+    //     box.makePingBox(gridContainer);
+    // });
 }
 function initPingScreen() {
     return tslib_1.__awaiter(this, void 0, void 0, function* () {

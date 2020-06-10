@@ -3,10 +3,10 @@
 // All of the Node.js APIs are available in this process.
 
 import { ServerBox } from "./screens/PingBox";
-import {Config, ServerConfigData} from "./helpers/config"
+import {ConfigSaver, ServerConfigData} from "./helpers/configSaver"
 
 let gridContainer : HTMLElement = document.getElementById("grid-container")!;
-let pingCofig : Config<ServerConfigData[]> = new Config("pingScreen");
+let pingCofig : ConfigSaver<ServerConfigData[]> = new ConfigSaver("pingScreen");
 let displayList: ServerBox[] = [];
 let waitTime = (1) * 60 * 1000;
 
@@ -21,13 +21,13 @@ function clearPingBoxes(){
 
 function drawPingBoxes(){
     clearPingBoxes();
-    pingCofig.saveData.forEach(element => {
-        let box = new ServerBox(element);
-        displayList.push(box);
+    // pingCofig.saveData.forEach(element => {
+    //     let box = new ServerBox(element);
+    //     displayList.push(box);
 
-        // this is NOT a good way of dooing this
-        box.makePingBox(gridContainer);
-    });
+    //     // this is NOT a good way of dooing this
+    //     box.makePingBox(gridContainer);
+    // });
 }
 
 async function initPingScreen() {
