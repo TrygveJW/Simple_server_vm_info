@@ -127,14 +127,19 @@ class ServerPingConfigManager {
         this.saver.saveConfig(this.formatTableDataToSaveData(this.configtable.tableCurrentValues));
     }
     formatTableDataToSaveData(tblData) {
-        return tblData === null || tblData === void 0 ? void 0 : tblData.map((row) => new configSaver_1.ServerConfigData(row[0], row[1], row[2]));
+        return tblData === null || tblData === void 0 ? void 0 : tblData.map((row) => {
+            let a = new configSaver_1.ServerConfigData();
+            a.serverName = row[0];
+            a.serverIP = row[1];
+            a.serverDomain = row[2];
+            return a;
+        });
     }
     formatSaveDataToTableData(saveData) {
-        for (const sobj of saveData) {
-            let a = sobj;
-            console.log(typeof a);
-        }
-        return saveData === null || saveData === void 0 ? void 0 : saveData.map((server) => [server.serverName, server.serverIP, server.serverDomain]);
+        return saveData === null || saveData === void 0 ? void 0 : saveData.map((s) => {
+            let server = Object.assign(new configSaver_1.ServerConfigData(), s);
+            return [server.serverName, server.serverIP, server.serverDomain];
+        });
     }
     makeScreen() {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
@@ -142,12 +147,9 @@ class ServerPingConfigManager {
                 let defaultVals = null;
                 try {
                     let savedata = yield this.saver.loadConfig();
-                    console.log(savedata);
-                    console.log(savedata[0].serverName);
                     defaultVals = this.formatSaveDataToTableData(savedata);
                 }
                 catch (error) { }
-                console.log(defaultVals);
                 this.configtable = new table_1.InputConfigTable(["Name", "IP", "Domain"], this.screenParent, defaultVals);
             }
             this.configtable.buildTable();

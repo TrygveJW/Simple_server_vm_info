@@ -59,29 +59,9 @@ export class ConfigSaver<T>{
 }
 
 export class ServerConfigData{
-    private _serverName: string;
-    private _serverIP: string;
-    private _serverDomain: string;
-
-    public get serverName(): string {
-        console.log(this._serverName)
-        return this._serverName;
-    }
-
-    public get serverIP(): string {
-        return this._serverIP;
-    }
-
-    public get serverDomain(): string {
-        return this._serverDomain;
-    }
-
-
-    constructor(name: string, ip :string, domain:string) {
-        this._serverName = name;
-        this._serverIP = ip;
-        this._serverDomain = domain;
-    }
+    serverName: string;
+    serverIP: string;
+    serverDomain: string;
 }
 
 // export class ConfigConfigData{

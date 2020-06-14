@@ -57,21 +57,6 @@ class ConfigSaver {
 }
 exports.ConfigSaver = ConfigSaver;
 class ServerConfigData {
-    constructor(name, ip, domain) {
-        this._serverName = name;
-        this._serverIP = ip;
-        this._serverDomain = domain;
-    }
-    get serverName() {
-        console.log(this._serverName);
-        return this._serverName;
-    }
-    get serverIP() {
-        return this._serverIP;
-    }
-    get serverDomain() {
-        return this._serverDomain;
-    }
 }
 exports.ServerConfigData = ServerConfigData;
 // export class ConfigConfigData{

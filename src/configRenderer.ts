@@ -196,16 +196,20 @@ class ServerPingConfigManager implements ConfigManager{
     displayed: boolean = false;
 
     private formatTableDataToSaveData(tblData:  string[][]): ServerConfigData[]{
-        return tblData?.map((row) => new ServerConfigData(row[0], row[1], row[2]));
+        return tblData?.map((row) => {
+            let a = new ServerConfigData();
+            a.serverName = row[0];
+            a.serverIP = row[1];
+            a.serverDomain = row[2];
+            return a;
+        });
     }
 
     private formatSaveDataToTableData(saveData: ServerConfigData[]): string[][]{
-        for (const sobj of saveData) {
-            let a  = sobj as ServerConfigData;
-            console.log(typeof a)
-        }
-
-        return saveData?.map((server) => [server.serverName, server.serverIP, server.serverDomain])
+        return saveData?.map((s) => {
+            let server = Object.assign(new ServerConfigData(), s)
+            return [server.serverName, server.serverIP, server.serverDomain];
+        })
 
         
     }
@@ -216,12 +220,9 @@ class ServerPingConfigManager implements ConfigManager{
             let defaultVals = null;
             try {
                 let savedata = await this.saver.loadConfig();
-                console.log(savedata);
-                console.log(savedata[0].serverName)
                 defaultVals = this.formatSaveDataToTableData(savedata);
             } catch (error) {}
 
-            console.log(defaultVals);
             this.configtable = new InputConfigTable(["Name", "IP", "Domain"], this.screenParent, defaultVals);
         }
 
