@@ -162,8 +162,9 @@ def main():
     data = None
     while True:
         data = read_data(data)
-
-        last_index = draw_table(data, 15, last_index)
+                
+        if data is not None:
+            last_index = draw_table(data, 15, last_index)
         time.sleep(update_delay)
 
 

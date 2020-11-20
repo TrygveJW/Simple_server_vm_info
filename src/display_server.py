@@ -143,8 +143,9 @@ def main():
     data = None
     while True:
         data = read_data(data)
-
-        draw_table(data, 15)
+        
+        if data is not None:
+            draw_table(data, 15)
         time.sleep(1)
 
 
