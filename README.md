@@ -1,7 +1,7 @@
 # Server and vmWare vm info displayer
 Once upon a time on university in the visualization lab we had the unusual problem of having more displays than stuff to put on them. And that was the trial by fire that resulted in this project.
 Because this application is probably going to run on those displays to the end of time stability is key. So i chose python not because it is a good choice but because i felt like it.
-Anyways this is probably where i should put a little rainbow on nondescript banners for people to ignore, and loads of gifs and images. The thing is i sort of cant be bothered. And given the primary purpos of this is displaying named and ip's like 90% of the image wold be blurred anyway. 
+Anyways this is probably where i should put a little rainbow of nondescript banners for people to ignore, and loads of gifs and images. The thing is i sort of cant be bothered. And given the primary purpos of this is displaying named and ip's like 90% of the image wold be blurred anyway. 
 
 ------------------
 
